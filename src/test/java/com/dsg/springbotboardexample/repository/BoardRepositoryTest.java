@@ -22,7 +22,7 @@ class BoardRepositoryTest {
 
         IntStream.rangeClosed(1,20).forEach(i -> {
             Board board = Board.builder()
-                    .title("board_dsg" + i)
+                    .title("board_dsg_title" + i)
                     .content("board_dsg_content" + i)
                     .build();
             boardRepository.save(board);
