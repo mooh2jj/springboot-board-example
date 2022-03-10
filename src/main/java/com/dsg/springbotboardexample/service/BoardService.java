@@ -28,4 +28,9 @@ public class BoardService {
         return boardRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("없는 id입니다."));
     }
+
+    // 특정 게시글 삭제
+    public void deleteById(Long id) {
+        boardRepository.deleteById(id);
+    }
 }
