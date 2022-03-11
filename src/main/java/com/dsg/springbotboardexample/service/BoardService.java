@@ -3,6 +3,8 @@ package com.dsg.springbotboardexample.service;
 import com.dsg.springbotboardexample.entity.Board;
 import com.dsg.springbotboardexample.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +21,8 @@ public class BoardService {
     }
 
     // 게시글 리스트 처리
-    public List<Board> list() {
-        return boardRepository.findAll();
+    public Page<Board> list(Pageable pageable) {
+        return boardRepository.findAll(pageable);
     }
 
     // 특정 게시글 상세보기

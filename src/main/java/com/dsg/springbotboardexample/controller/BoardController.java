@@ -4,6 +4,10 @@ import com.dsg.springbotboardexample.entity.Board;
 import com.dsg.springbotboardexample.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -57,8 +61,20 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public String list(Model model) {
-        model.addAttribute("list", boardService.list());
+    public String list(Model model,
+                       @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        Page<Board> list = boardService.list(pageable);
+
+        int nowPage = list.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, list.getTotalPages());
+
+        model.addAttribute("list", list);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
         return "board/list";
     }
 
