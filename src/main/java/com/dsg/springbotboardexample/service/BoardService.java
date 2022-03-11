@@ -35,4 +35,8 @@ public class BoardService {
     public void deleteById(Long id) {
         boardRepository.deleteById(id);
     }
+
+    public Page<Board> searchList(String searchKeyword, Pageable pageable) {
+        return boardRepository.findByTitleContaining(searchKeyword, pageable);
+    }
 }
