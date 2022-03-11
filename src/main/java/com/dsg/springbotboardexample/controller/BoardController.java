@@ -45,12 +45,15 @@ public class BoardController {
     }*/
 
     @PostMapping("/writedo")
-    @ResponseBody
-    public String writedo(Board board) {
+    public String writedo(Board board, Model model) {
 
         boardService.write(board);
 
-        return board.toString();
+        model.addAttribute("message", "글 작성이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/board/list");
+
+//        return board.toString();
+        return "board/message";
     }
 
     @GetMapping("/list")
