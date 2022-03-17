@@ -11,6 +11,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Slf4j
 @Controller
@@ -49,9 +52,9 @@ public class BoardController {
     }*/
 
     @PostMapping("/writedo")
-    public String writedo(Board board, Model model) {
+    public String writedo(Board board, Model model, MultipartFile file) throws IOException {
 
-        boardService.write(board);
+        boardService.write(board, file);
 
         model.addAttribute("message", "글 작성이 완료되었습니다.");
         model.addAttribute("searchUrl", "/board/list");
@@ -107,13 +110,13 @@ public class BoardController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable("id") Long id, Board board) {
+    public String update(@PathVariable("id") Long id, Board board, MultipartFile file) throws IOException{
 
         Board boardTemp = boardService.view(id);
         boardTemp.setTitle(board.getTitle());
         boardTemp.setContent(board.getContent());
 
-        boardService.write(boardTemp);
+        boardService.write(boardTemp, file);
 
         return "redirect:/board/list";
     }
