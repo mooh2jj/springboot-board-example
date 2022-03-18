@@ -2,6 +2,13 @@ server:
   port: 8090
 
 spring:
+  devtools:
+    livereload:
+      enabled: true
+      # thymeleaf cache 비활성화
+  thymeleaf:
+    cache: false
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/board
@@ -10,12 +17,16 @@ spring:
 
 
   jpa:
+    open-in-view: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      use-new-id-generator-mappings: false
+    show-sql: true
     properties:
-      hibernate:
-        show-sql: true
-        format_sql: true
+      hibernate.format_sql: true
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 
 logging:
