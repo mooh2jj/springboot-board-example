@@ -1,4 +1,4 @@
-package com.dsg.springbotboardexample.config;
+package com.dsg.springbootboardexample.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,7 +1,7 @@
-package com.dsg.springbotboardexample.controller;
+package com.dsg.springbootboardexample.controller;
 
-import com.dsg.springbotboardexample.entity.Board;
-import com.dsg.springbotboardexample.service.BoardService;
+import com.dsg.springbootboardexample.entity.Board;
+import com.dsg.springbootboardexample.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

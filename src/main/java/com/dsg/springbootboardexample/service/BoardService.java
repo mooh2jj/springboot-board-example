@@ -1,7 +1,7 @@
-package com.dsg.springbotboardexample.service;
+package com.dsg.springbootboardexample.service;
 
-import com.dsg.springbotboardexample.entity.Board;
-import com.dsg.springbotboardexample.repository.BoardRepository;
+import com.dsg.springbootboardexample.entity.Board;
+import com.dsg.springbootboardexample.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 @Service

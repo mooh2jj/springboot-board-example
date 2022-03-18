@@ -1,4 +1,4 @@
-package com.dsg.springbotboardexample.entity;
+package com.dsg.springbootboardexample.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

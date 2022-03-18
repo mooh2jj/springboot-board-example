@@ -1,4 +1,4 @@
-package com.dsg.springbotboardexample;
+package com.dsg.springbootboardexample;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing
-public class SpringbotBoardExampleApplication {
+public class SpringbootBoardExampleApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringbotBoardExampleApplication.class, args);
+        SpringApplication.run(SpringbootBoardExampleApplication.class, args);
     }
 
 }
