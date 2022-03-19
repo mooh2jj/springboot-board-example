@@ -94,4 +94,18 @@ public class CommentService {
         comment.setEmail(commentRequest.getEmail());
         comment.setBody(commentRequest.getBody());
     }
+
+    public void deleteComment(Long boardId, Long commentId) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new RuntimeException("board를 찾을 수 없습니다."));
+
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new RuntimeException("comment를 찾을 수 없습니다."));
+
+        if (!comment.getBoard().getId().equals(board.getId())) {
+            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "comment가 board에 속하지 않습니다!");
+        }
+
+        commentRepository.delete(comment);
+    }
 }
