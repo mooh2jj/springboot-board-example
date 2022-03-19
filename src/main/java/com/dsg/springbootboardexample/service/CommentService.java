@@ -8,6 +8,9 @@ import com.dsg.springbootboardexample.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -42,5 +45,12 @@ public class CommentService {
                     .email(commentDto.getEmail())
                     .body(commentDto.getBody())
                     .build();
+    }
+
+    public List<CommentDto> getCommentsByBoardId(Long boardId) {
+        List<Comment> comments = commentRepository.findByBoardId(boardId);
+        return comments.stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
     }
 }
