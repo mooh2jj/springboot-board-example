@@ -1,10 +1,10 @@
-package com.dsg.springbotboardexample;
+package com.dsg.springbootboardexample;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringbotBoardExampleApplicationTests {
+class SpringbootBoardExampleApplicationTests {
 
     @Test
     void contextLoads() {

@@ -1,6 +1,6 @@
-package com.dsg.springbotboardexample.repository;
+package com.dsg.springbootboardexample.repository;
 
-import com.dsg.springbotboardexample.entity.Board;
+import com.dsg.springbootboardexample.entity.Board;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
