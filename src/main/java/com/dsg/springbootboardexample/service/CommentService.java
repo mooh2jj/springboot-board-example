@@ -3,9 +3,11 @@ package com.dsg.springbootboardexample.service;
 import com.dsg.springbootboardexample.entity.Board;
 import com.dsg.springbootboardexample.entity.Comment;
 import com.dsg.springbootboardexample.entity.CommentDto;
+import com.dsg.springbootboardexample.exception.BlogAPIException;
 import com.dsg.springbootboardexample.repository.BoardRepository;
 import com.dsg.springbootboardexample.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,5 +54,19 @@ public class CommentService {
         return comments.stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
+    }
+
+    public CommentDto getCommentById(Long boardId, Long commentId) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new RuntimeException("board를 찾을 수 없습니다."));
+
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new RuntimeException("comment를 찾을 수 없습니다."));
+
+        if (!comment.getBoard().getId().equals(board.getId())) {
+            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "comment가 board에 속하지 않습니다!");
+        }
+
+        return mapToDto(comment);
     }
 }
