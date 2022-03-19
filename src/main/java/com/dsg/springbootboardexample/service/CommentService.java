@@ -69,4 +69,29 @@ public class CommentService {
 
         return mapToDto(comment);
     }
+
+    public CommentDto updateComment(Long boardId, Long commentId, CommentDto commentRequest) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new RuntimeException("board를 찾을 수 없습니다."));
+
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new RuntimeException("comment를 찾을 수 없습니다."));
+
+        if (!comment.getBoard().getId().equals(board.getId())) {
+            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "comment가 board에 속하지 않습니다!");
+        }
+
+        mapToUpdated(commentRequest, comment);
+
+        Comment updatedComment = commentRepository.save(comment);
+
+        return mapToDto(updatedComment);
+
+    }
+
+    private void mapToUpdated(CommentDto commentRequest, Comment comment) {
+        comment.setName(commentRequest.getName());
+        comment.setEmail(commentRequest.getEmail());
+        comment.setBody(commentRequest.getBody());
+    }
 }
