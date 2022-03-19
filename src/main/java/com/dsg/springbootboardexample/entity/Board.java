@@ -11,7 +11,9 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "board")
+@Table(
+        name = "board", uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})}
+)
 public class Board extends BaseTimeEntity{
 
     @Id
