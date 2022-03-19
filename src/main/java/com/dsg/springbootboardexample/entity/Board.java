@@ -3,6 +3,8 @@ package com.dsg.springbootboardexample.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(
-        name = "board", uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})}
+        name = "boards", uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})}
 )
 public class Board extends BaseTimeEntity{
 
@@ -32,4 +34,7 @@ public class Board extends BaseTimeEntity{
 
     @Column(length = 50, nullable = false)
     private String writer;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 }
