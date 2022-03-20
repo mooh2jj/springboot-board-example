@@ -5,6 +5,7 @@ import com.dsg.springbootboardexample.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,6 +18,7 @@ public class CommentController {
 
     private final CommentService commentService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/boards/{boardId}/comments")
     public ResponseEntity<CommentDto> createComment(
             @PathVariable Long boardId,
@@ -38,6 +40,7 @@ public class CommentController {
         return ResponseEntity.ok(commentService.getCommentById(boardId, commentId));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/boards/{boardId}/comments/{id}")
     public ResponseEntity<CommentDto> updateComment(
             @PathVariable Long boardId,
@@ -47,6 +50,7 @@ public class CommentController {
         return ResponseEntity.ok(commentService.updateComment(boardId, commentId, commentDto));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/boards/{boardId}/comments/{id}")
     public ResponseEntity<String> deleteComment(
             @PathVariable Long boardId,
