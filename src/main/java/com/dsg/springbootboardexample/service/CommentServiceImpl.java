@@ -7,6 +7,7 @@ import com.dsg.springbootboardexample.exception.BlogAPIException;
 import com.dsg.springbootboardexample.repository.BoardRepository;
 import com.dsg.springbootboardexample.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,8 @@ public class CommentServiceImpl implements CommentService{
 
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
+
+    private final ModelMapper mapper;
 
     @Override
     public CommentDto createComment(Long boardId, CommentDto commentDto) {
@@ -33,21 +36,23 @@ public class CommentServiceImpl implements CommentService{
     }
 
     private CommentDto mapToDto(Comment comment) {
-        return CommentDto.builder()
+/*        return CommentDto.builder()
                 .id(comment.getId())
                 .name(comment.getName())
                 .email(comment.getEmail())
                 .body(comment.getBody())
-                .build();
+                .build();*/
+        return mapper.map(comment, CommentDto.class);
     }
 
     private Comment mapToEntity(CommentDto commentDto) {
-            return Comment.builder()
+/*            return Comment.builder()
                     .id(commentDto.getId())
                     .name(commentDto.getName())
                     .email(commentDto.getEmail())
                     .body(commentDto.getBody())
-                    .build();
+                    .build();*/
+        return mapper.map(commentDto, Comment.class);
     }
     @Override
     public List<CommentDto> getCommentsByBoardId(Long boardId) {
