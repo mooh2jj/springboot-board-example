@@ -4,6 +4,7 @@ import com.dsg.springbootboardexample.entity.Board;
 import com.dsg.springbootboardexample.entity.Comment;
 import com.dsg.springbootboardexample.dto.CommentDto;
 import com.dsg.springbootboardexample.exception.BlogAPIException;
+import com.dsg.springbootboardexample.exception.ResourceNotFoundException;
 import com.dsg.springbootboardexample.repository.BoardRepository;
 import com.dsg.springbootboardexample.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class CommentServiceImpl implements CommentService{
         Comment comment = mapToEntity(commentDto);
 
         Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new RuntimeException("board를 찾을 수 없습니다."));
+                .orElseThrow(() -> new ResourceNotFoundException("Board", "id", boardId));
         comment.setBoard(board);
         commentRepository.save(comment);
 
@@ -93,10 +94,10 @@ public class CommentServiceImpl implements CommentService{
 
     private Comment errorCheckComment(BoardRepository boardRepository, Long boardId, CommentRepository commentRepository, Long commentId) {
         Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new RuntimeException("board를 찾을 수 없습니다."));
+                .orElseThrow(() -> new ResourceNotFoundException("Board", "id", boardId));
 
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new RuntimeException("comment를 찾을 수 없습니다."));
+                .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
 
         if (!comment.getBoard().getId().equals(board.getId())) {
             throw new BlogAPIException(HttpStatus.BAD_REQUEST, "comment가 board에 속하지 않습니다!");
