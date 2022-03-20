@@ -2,7 +2,7 @@ package com.dsg.springbootboardexample.service;
 
 import com.dsg.springbootboardexample.entity.Board;
 import com.dsg.springbootboardexample.entity.Comment;
-import com.dsg.springbootboardexample.entity.CommentDto;
+import com.dsg.springbootboardexample.dto.CommentDto;
 import com.dsg.springbootboardexample.exception.BlogAPIException;
 import com.dsg.springbootboardexample.repository.BoardRepository;
 import com.dsg.springbootboardexample.repository.CommentRepository;

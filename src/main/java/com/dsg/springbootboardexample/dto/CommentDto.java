@@ -1,4 +1,4 @@
-package com.dsg.springbootboardexample.entity;
+package com.dsg.springbootboardexample.dto;
 
 import lombok.*;
 

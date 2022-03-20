@@ -1,6 +1,6 @@
 package com.dsg.springbootboardexample.controller.api;
 
-import com.dsg.springbootboardexample.entity.CommentDto;
+import com.dsg.springbootboardexample.dto.CommentDto;
 import com.dsg.springbootboardexample.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

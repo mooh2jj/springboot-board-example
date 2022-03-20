@@ -1,6 +1,6 @@
 package com.dsg.springbootboardexample.service;
 
-import com.dsg.springbootboardexample.entity.CommentDto;
+import com.dsg.springbootboardexample.dto.CommentDto;
 
 import java.util.List;
 
