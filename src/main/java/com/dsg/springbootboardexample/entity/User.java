@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -24,5 +25,5 @@ public class User {
     @JoinTable(name = "user_roles",
     joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(name="role_id", referencedColumnName = "id"))
-    private List<Role> roles;
+    private Set<Role> roles;
 }
