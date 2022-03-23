@@ -6,6 +6,8 @@ import com.dsg.springbootboardexample.entity.Role;
 import com.dsg.springbootboardexample.entity.User;
 import com.dsg.springbootboardexample.repository.RoleRepository;
 import com.dsg.springbootboardexample.repository.UserRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 
+@Api(value = "auth controller exposes signin, signup rest-apis")
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -31,6 +34,7 @@ public class AuthController {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @ApiOperation(value = "rest api : signin to app")
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(
@@ -42,6 +46,7 @@ public class AuthController {
         return new ResponseEntity<>("User signed in successfully!", HttpStatus.OK);
     }
 
+    @ApiOperation(value = "rest api : signup to app")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto) {
         if (userRepository.existsByUsername(signUpDto.getUsername())) {
