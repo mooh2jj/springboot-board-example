@@ -15,8 +15,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.dsg.springbootboardexample.exception.BlogErrorCode.INTERNAL_SERVER_ERROR;
+
 @ControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class BloglExceptionHandler extends ResponseEntityExceptionHandler {
 
     // handle sepecific exceptions
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -24,10 +26,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             ResourceNotFoundException exception,
             WebRequest webRequest){
 
-        ErrorDetails errorDetails = new ErrorDetails(
-                new Date(),
-                exception.getMessage(),
-                webRequest.getDescription(false));
+//        ErrorDetails errorDetails = new ErrorDetails(
+//                new Date(),
+//                exception.getMessage(),
+//                webRequest.getDescription(false));
+        ErrorDetails errorDetails = ErrorDetails.builder()
+                .timestamp(new Date())
+                .message(exception.getMessage())
+                .description(webRequest.getDescription(false))
+                .errorCode(exception.getErrorCode())
+                .build();
 
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
@@ -37,10 +45,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             BlogAPIException exception,
             WebRequest webRequest){
 
-        ErrorDetails errorDetails = new ErrorDetails(
-                new Date(),
-                exception.getMessage(),
-                webRequest.getDescription(false));
+        ErrorDetails errorDetails = ErrorDetails.builder()
+                .timestamp(new Date())
+                .message(exception.getMessage())
+                .description(webRequest.getDescription(false))
+                .errorCode(exception.getErrorCode())
+                .build();
 
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
@@ -51,10 +61,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             Exception exception,
             WebRequest webRequest){
 
-        ErrorDetails errorDetails = new ErrorDetails(
-                new Date(),
-                exception.getMessage(),
-                webRequest.getDescription(false));
+        ErrorDetails errorDetails = ErrorDetails.builder()
+                .timestamp(new Date())
+                .message(exception.getMessage())
+                .description(webRequest.getDescription(false))
+                .errorCode(INTERNAL_SERVER_ERROR)
+                .build();
 
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }

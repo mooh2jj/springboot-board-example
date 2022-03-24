@@ -4,6 +4,7 @@ import com.dsg.springbootboardexample.entity.Board;
 import com.dsg.springbootboardexample.entity.Comment;
 import com.dsg.springbootboardexample.dto.CommentDto;
 import com.dsg.springbootboardexample.exception.BlogAPIException;
+import com.dsg.springbootboardexample.exception.BlogErrorCode;
 import com.dsg.springbootboardexample.exception.ResourceNotFoundException;
 import com.dsg.springbootboardexample.repository.BoardRepository;
 import com.dsg.springbootboardexample.repository.CommentRepository;
@@ -92,7 +93,7 @@ public class CommentServiceImpl implements CommentService{
         commentRepository.delete(comment);
     }
 
-    private Comment errorCheckComment(BoardRepository boardRepository, Long boardId, CommentRepository commentRepository, Long commentId) {
+    private Comment errorCheckComment1(BoardRepository boardRepository, Long boardId, CommentRepository commentRepository, Long commentId) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new ResourceNotFoundException("Board", "id", boardId));
 
@@ -101,6 +102,19 @@ public class CommentServiceImpl implements CommentService{
 
         if (!comment.getBoard().getId().equals(board.getId())) {
             throw new BlogAPIException(HttpStatus.BAD_REQUEST, "comment가 board에 속하지 않습니다!");
+        }
+        return comment;
+    }
+
+    private Comment errorCheckComment(BoardRepository boardRepository, Long boardId, CommentRepository commentRepository, Long commentId) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new ResourceNotFoundException(BlogErrorCode.NO_TARGET));
+
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new ResourceNotFoundException(BlogErrorCode.NO_TARGET));
+
+        if (!comment.getBoard().getId().equals(board.getId())) {
+            throw new BlogAPIException(BlogErrorCode.NO_TARGET);
         }
         return comment;
     }

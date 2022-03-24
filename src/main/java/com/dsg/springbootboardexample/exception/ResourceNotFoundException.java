@@ -11,11 +11,21 @@ public class ResourceNotFoundException extends RuntimeException{
     private String fieldName;
     private long fieldValue;
 
+    private BlogErrorCode errorCode;
+
+    private String detailMessage;
+
     public ResourceNotFoundException(String resourceName, String fieldName, long fieldValue) {
         super(String.format("%s not found with %s : '%s'", resourceName, fieldName, fieldValue)); // Post not found with id : 1
         this.resourceName = resourceName;
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;
+    }
+
+    public ResourceNotFoundException(BlogErrorCode errorCode) {
+        super(errorCode.getMessage());
+        this.errorCode = errorCode;
+        this.detailMessage = errorCode.getMessage();
     }
 
 }

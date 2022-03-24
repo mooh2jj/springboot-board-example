@@ -1,16 +1,21 @@
 package com.dsg.springbootboardexample.dto;
 
+import com.dsg.springbootboardexample.exception.BlogErrorCode;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class ErrorDetails {
 
     private Date timestamp;
     private String message;
-    private String details;
-
+    private String description;
+    private BlogErrorCode errorCode;
 }
