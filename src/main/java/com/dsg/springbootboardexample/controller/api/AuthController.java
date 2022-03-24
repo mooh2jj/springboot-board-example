@@ -1,11 +1,13 @@
 package com.dsg.springbootboardexample.controller.api;
 
+import com.dsg.springbootboardexample.dto.JWTAuthResponse;
 import com.dsg.springbootboardexample.dto.LoginDto;
 import com.dsg.springbootboardexample.dto.SignUpDto;
 import com.dsg.springbootboardexample.entity.Role;
 import com.dsg.springbootboardexample.entity.User;
 import com.dsg.springbootboardexample.repository.RoleRepository;
 import com.dsg.springbootboardexample.repository.UserRepository;
+import com.dsg.springbootboardexample.security.JwtTokenProvider;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +36,8 @@ public class AuthController {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
+    private final JwtTokenProvider jwtTokenProvider;
+
     @ApiOperation(value = "rest api : signin to app")
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginDto loginDto) {
@@ -43,7 +47,12 @@ public class AuthController {
                         loginDto.getPassword()
                 ));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>("User signed in successfully!", HttpStatus.OK);
+
+        // get token from jwtTokenProvider
+        String token = jwtTokenProvider.generateToken(authentication);
+
+//        return new ResponseEntity<>("User signed in successfully!", HttpStatus.OK);
+        return ResponseEntity.ok(new JWTAuthResponse(token));
     }
 
     @ApiOperation(value = "rest api : signup to app")
